@@ -1,7 +1,7 @@
 <?PHP 
 
  // tibdit plugin settings
- // Version: 1.2.22
+ // Version: 1.2.30
  // License: GPL3
 
 
@@ -109,6 +109,8 @@ if (!class_exists("tibdit_settings"))
 
     function main_section()
     { 
+      $plugurl = plugin_dir_url( __FILE__ );
+
       tiblog("||ADM form section"); 
 
       echo
@@ -218,7 +220,6 @@ INSTRUCTIONS;
         onkeypress='this.onchange();' onpaste='this.onchange();' oninput='this.onchange();'  >"; 
 
       echo "<span class='bd status' id='payaddr_field_status'>&emsp;?</span>";
-      echo "<script>payaddr.onchange();</script>";
     }
 
 
@@ -271,9 +272,9 @@ INSTRUCTIONS;
         if (AddressValidator::typeOf($opts_in['payaddr']))
           $new_options['payaddr'] = $opts_in['payaddr'];
         else
-          $new_options['payaddr'] = "iNVALiD";
+          $new_options['payaddr'] = "";
       else
-        $new_options['payaddr'] = "REQUIRED";
+        $new_options['payaddr'] = "";
 
       if( isset($opts_in['acktime']))
         if (intval($opts_in['acktime']) > 0 && intval($opts_in['acktime']) < 31)
@@ -296,8 +297,8 @@ INSTRUCTIONS;
       //   wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
       $plugurl = plugin_dir_url( __FILE__ );
       tiblog("admin render");
-      echo "<div class='wrap'><h2>$this->page_title</h2>";
-      echo "<form method='post' action='options.php'>";
+      echo "<div class='wrap'><h2>$this->page_title       <img class='beta' src='$plugurl/beta-35px.png' alt='beta'/></h2>";
+      echo "<form method='post' action='options.php' class='bd';>";
       settings_fields( $this->settings_field );  
       do_settings_sections( $this->page_id );
       submit_button( 'Save Changes', 'primary', 'submit', false); 
@@ -305,15 +306,16 @@ INSTRUCTIONS;
       submit_button( 'list tib counts', 'secondary', 'list', false, array( 'onclick' => "{}" ));
       echo 
 <<<TESTMODE
-        <h4><u>tibdit testmode</u>&emsp;<img src='$plugurl/testmode-icon-24px.png' style='width: 1em; vertical-align: middle'></h4>
+        <h4><u>tibdit testmode</u>&emsp;<img src='$plugurl/testmode-icon-24px.png' style='width: 1.3em; vertical-align: middle'></h4>
         <p>Bitcoin addresses that start with <span style="font-family: monospace;">'m'</span> or <span style="font-family: monospace;">'n'</span> are 'testnet' addresses that can be used readily with no actual money or value involved.  
-        tibdit will detect a testnet address and trigger testmode, which allows anyone to experiment with tibbing at no risk.  Conversely,
+        tibdit will detect a testnet address and trigger testmode, which allows anyone to experiment with tibbing at no risk.  Testmode is indicated with the yellow beaker icon. Conversely,
         Bitcoin addresses that start with a <span style="font-family: monospace;">'1'</span> are production, or 'mainnet' addresses; users need to have purchased a bundle of real tibs 
         to tib 'mainnet' addresses.  The bitcoin testnet and mainnet are completely seperate, there is no risk of spending real bitcoins on
         the testnet, or the reverse.</p>
         <p>You can generate you own testnet bitcoin address in just a few seconds at 
         <a style="font-family: monospace;" href="https://www.bitaddress.org/bitaddress.org-v2.9.3-SHA1-7d47ab312789b7b3c1792e4abdb8f2d95b726d64.html?testnet=true">bitaddress testnet edition</a>.</p>
 TESTMODE;
+      echo "<script>payaddr.onchange();</script>";
       echo "</form></div>";
     }
   } // end class
