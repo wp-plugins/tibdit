@@ -4,7 +4,7 @@ Donate link: n/a
 Tags: micropayments, microdonations, monetisation, monetization, fundraising,   button, integration, shortcode  
 Requires at least: 3.0.1  
 Tested up to: 3.9.3  
-Stable tag: 1.2.20  
+Stable tag: 1.2.30  
 License: GPL3  
 License URI: http://www.gnu.org/licenses/gpl-3.0.html  
 
@@ -83,11 +83,13 @@ Every time someone confirms a tib to some content of yours, we send back a token
 
 == Changelog ==
 
-= 1.2.24 =
+= 1.2.30 =
 
 Fixed a bug with plugin options not saving
-Significantly increased the amount of bitcoin address validation.  The plugin will now blank the bitcoin address on settings save if it is invalid.
+Significantly increased the amount of bitcoin address validation. 
+Prevented setting save with invalid bitcoin address
 Further improved the CSS to avoid collissions with themes or other plugins.
+Added beta icon to widget and settings page
 
 
 = 1.2.22 =

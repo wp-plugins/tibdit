@@ -1,4 +1,4 @@
-/*v1.2.22*/
+/*v1.2.30*/
 
 .bd.widget
 {
@@ -13,11 +13,21 @@
   position: relative;
 }
 
+img.beta 
+{
+  padding-left: 1em;
+  vertical-align: middle;
+}
+
 .bd img.beta
 {
   position: absolute;
   right: 1em;
+  padding-right: 1em;
+  padding-top: 1em;
 }
+
+
 
 div.bd.button:hover div.tip{
     /* Chrome, Safari, Opera */
@@ -171,11 +181,21 @@ div.bd.button .count
 
 
 
-input.bd
+input[type='text'].bd
 {
 	vertical-align: middle;
 	width: auto;
 	display: inline;
+}
+
+.bd input[type=submit]
+{
+  width: 10em;
+}
+
+.bd input[type=submit][disabled], .bd input[type=submit]:disabled
+{
+  opacity: 0.2;
 }
 
 span.bd.status
@@ -184,3 +204,5 @@ span.bd.status
   font-weight: bold;
   font-size: 160%;
 }
+
+
