@@ -5,7 +5,7 @@ tiblog("#BOF");
  * Plugin Name: tibdit
  * Plugin URI: http://www.tibdit.com
  * Description: Collect tibs from readers.
- * Version: 1.2.30
+ * Version: 1.2.31
  * Author: Justin Maxwell / Jim Smith / Laxyo Solution Softs Pvt Ltd.
  * Author URI: 
  * Text Domain: tibdit
