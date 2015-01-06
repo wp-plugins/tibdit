@@ -5,7 +5,7 @@ tiblog("#BOF");
  * Plugin Name: tibdit
  * Plugin URI: http://www.tibdit.com
  * Description: Collect tibs from readers.
- * Version: 1.2.22
+ * Version: 1.2.31
  * Author: Justin Maxwell / Jim Smith / Laxyo Solution Softs Pvt Ltd.
  * Author URI: 
  * Text Domain: tibdit
@@ -46,43 +46,44 @@ define( 'TIBDIT_URL', plugin_dir_url( __FILE__ ) );
 
 
 function get_tib_token()    // On page load (wp_head) check for tib token (ie page load is tibdit callback) 
-{ 	
+{ 
+
   $token = ( get_query_var( 'tibdit' ) ) ? get_query_var( 'tibdit' ) : 1;
-  if($token != 1)  // if there is a tibdit query string...
+  if($token != 1)  // if a token is found, assume this page is loading in the tibdit popup window
   {	
 
-    $token = base64_decode($token);
+    // Break apart the proof-of-tib token
+    $token = base64_decode($token);      
     parse_str($token, $token_content);
-    $payaddr = $token_content["payaddr"];
-    $subref = $token_content["subref"];
-    $tibcount = $token_content["tibcount"];
+    extract($token_content, EXTR_OVERWRITE);
+
+    // Determine cookie lifetime
     $options = get_option('tibdit_options');
     $acktime = $options['acktime'] ; // 1 - 30  // minutes or days
-
-    if (substr($payaddr, 0, 1) == '1')
+    if (substr($payaddr, 0, 1) == '1' || substr($payaddr, 0, 1) == '3' )  // mainnet - not testmode
     	$acktime = $acktime * 60 * 24 ; // minutes per day
 
-
-    tiblog("get_tib_token(): token " . $token);
-    // setcookie($subref, "", now()+$acktime);
+    // insert page load javascript to set user cookie for subref, and close
     echo "<script> setCookie($acktime,'$subref'); x=window.open('','_self'); x.close(); </script>";    
-    tiblog("get_tib_token()  token parsed: @$payaddr #$subref %$tibcount");
+
+    tiblog("get_tib_token(): token " . var_export($token, true));
+
     // tiblog("callback: " . $SERVER["REQ"]);
 
 		if (substr($subref, 0, 3) != "WP_") 
-			tiblog( "get_tib_token() - not a WP_ subref! #$subref %$tibcount");
-		elseif ($subref == "WP_SITE") 
-		{
-			tiblog("get_tib_token() - site tibbed #$subref %$tibcount");
+			tiblog( "get_tib_token() - not a WP_ subref! #$subref %$tibcount");  // need to force WP_ for widget
+		elseif ($subref == "WP_SITE")    // [TIB_SITE]
+		{   
+			tiblog("get_tib_token() - site tibbed #$subref %$tibcount");  
 			update_option("tib_count_".$subref, $tibcount);
 		}
-		elseif (substr($subref, 3,3) == "ID_" && intval(substr($subref, 6)) > 0)
+		elseif (substr($subref, 3,3) == "ID_" && intval(substr($subref, 6)) > 0)  // [TIB_POST]
 		{
 			tiblog("get_tib_token() - post tibbed #$subref %$tibcount");
 			update_post_meta(intval(substr($subref, 6)), "tib_count", $tibcount);
 			tiblog(get_post_meta( intval(substr($subref, 6)), "tib_count", true ));
 		}
-		else
+		else        // WIDGET - arbitrary subref
 		{
 			tiblog( "get_tib_token() - Couldn't parse WP_ token  #$subref %$tibcount ~".substr($subref, 6));
 			update_option("tib_count_".$subref, $tibcount);
@@ -174,11 +175,9 @@ function get_tib_token()    // On page load (wp_head) check for tib token (ie pa
         else 
         {
           tiblog( "form() no instance - options " . var_export($instance, true));
-          $options = get_option('tibdit_options');
-          $instance['title'] = $options['title'];  
-          $instance['intro'] = $options['intro'];
-          $instance['payaddr'] = $options['payaddr'];
+          $instance = wp_parse_args($instance, get_option('tibdit_options'));
           $instance['subref'] = "WP_something";
+
           tiblog("form() no instance - defaults set " . var_export($instance, true));   //default content for widget settings on Apearance/Widget page
         } 
 
@@ -189,7 +188,6 @@ function get_tib_token()    // On page load (wp_head) check for tib token (ie pa
          "payaddr" => "Bitcoin Address",
          "subref" => "Subreference"
         );
-
 
         foreach ($setting as $key => $label) 
         {
@@ -478,7 +476,7 @@ function get_tib_token()    // On page load (wp_head) check for tib token (ie pa
 
 	function tiblog($message)
 		{
-			error_log(date("d H:i:s",time())." - ".$message."\n", 3, "/var/log/lighttpd/tibdit.log");
+			// error_log(date("d H:i:s",time())." - ".$message."\n", 3, "/var/log/lighttpd/tibdit.log");
 		}
 
 ?>
