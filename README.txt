@@ -4,7 +4,7 @@ Donate link: n/a
 Tags: micropayments, microdonations, monetisation, monetization, fundraising,   button, integration, shortcode  
 Requires at least: 3.0.1  
 Tested up to: 3.9.3  
-Stable tag: 1.2.31 
+Stable tag: 1.2.32 
 License: GPL3  
 License URI: http://www.gnu.org/licenses/gpl-3.0.html  
 
@@ -43,6 +43,10 @@ This plugin automates the process for WordPress site operators, including the re
 
 To get a feel for how tibdit works, please visit http://demo.tibdit.com
 
+**feedback""
+
+We would really appreciate hearing any questions and/or feedback you might have  [@tibdit](https://twitter.com/tibdit) or at [feedback@tibdit.com](mailto:feedback@tibdit.com).
+
 
 == Installation ==
 
@@ -66,17 +70,17 @@ If bitcoin concerns you as perhaps to complex, follow the simple instructions on
 
 == Frequently Asked Questions ==
 
-### what is tibdit? ###
+### what is tibdit? 
 
 tibdit is a system that enables users to send microdonations and micropayments to sites publishing a tib button alongside their content or service.  Unlike other micropayment offerings, tibdit is designed so that these payments can be made 'without a second thought'.
 
 In time, this will result in your blog receiving many tiny donations if your site visitors are appreciative, rather than hardly any with other approaches to collecting donations.
 
-### what is a tib? ###
+### what is a tib? 
 
 A tib is a user-specific pre-set value that is sent to sites with the user confirms the payment.
 
-### it sounds very complicated ###
+### it sounds very complicated 
 
 It's really not.  We suggest you look at demo.tibdit.com, and the instructions on the plugin settings page, to see just how straightforward it is.
 

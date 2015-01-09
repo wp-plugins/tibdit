@@ -1,11 +1,11 @@
-// v1.2.30
+// v1.2.32
 
 function payaddr_change( f, plugurl)
 {
   base54_clean( f);
   valid = "132mn";
 
-  if( f.value == "")
+  if( f.value === "")
   {
     payaddr_field_status.innerHTML="&emsp;&#10068;";
     payaddr_field_status.style.color='orange';
@@ -57,10 +57,7 @@ function lowercase_tib( f)
 {
   ss = f.selectionStart;
   se = f.selectionEnd;
-  f.value = f.value.replace(
-    /([Tt][iI][bB])([^ACE-Zace-z][\w]*|$)/g, 
-    function(tibword) { return tibword.toLowerCase(); }  
-  )
+  f.value = f.value.replace( /([Tt][iI][bB])([^ACE-Zace-z][\w]*|$)/g, function(tibword) { return tibword.toLowerCase(); } );
   f.setSelectionRange(ss,se);
 }
 
