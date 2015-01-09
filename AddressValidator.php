@@ -53,16 +53,16 @@ class AddressValidator {
 
         switch ($version) {
             case self::MAINNET:
-              $valids = [self::MAINNET_PUBKEY, self::MAINNET_SCRIPT];
+              $valids = array(self::MAINNET_PUBKEY, self::MAINNET_SCRIPT);
               break;
             case self::TESTNET:
-              $valids = [self::TESTNET_PUBKEY, self::TESTNET_SCRIPT];
+              $valids = array(self::TESTNET_PUBKEY, self::TESTNET_SCRIPT);
               break;
             case self::MAINNET_PUBKEY:
             case self::MAINNET_SCRIPT:
             case self::TESTNET_PUBKEY:
             case self::TESTNET_SCRIPT:
-              $valids = [$version];
+              $valids = array($version);
               break;
             default:
               throw new Exception('Unknown version constant');
