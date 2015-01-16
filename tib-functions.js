@@ -1,3 +1,5 @@
+// version 1.2.34
+
 var tibWindow = null;
 var tibWindowCheck = null;
 
@@ -25,8 +27,8 @@ function getCookie(cname)   // get the cookie based on a name
 	for(var i=0; i<ca.length; i++) 
 	{
 		var c = ca[i];
-		while (c.charAt(0)==' ') c = c.substring(1);
-		if (c.indexOf(name) != -1) return c.substring(name.length,c.length);
+    while (c.charAt(0)==' ') { c = c.substring(1); }
+    if (c.indexOf(name) != -1) { return c.substring(name.length,c.length); }
 	}
 	return "";
 }
@@ -49,10 +51,7 @@ function lowercase_tib( f)
 {
   ss = f.selectionStart;
   se = f.selectionEnd;
-  f.value = f.value.replace(
-    /([Tt][iI][bB])([^ACE-Zace-z][\w]*|$)/g, 
-    function(tibword) { return tibword.toLowerCase(); }  
-  )
+  f.value = f.value.replace( /([Tt][iI][bB])([^ACE-Zace-z][\w]*|$)/g, function(tibword) { return tibword.toLowerCase(); } );
   f.setSelectionRange(ss,se);
 }
 
@@ -60,7 +59,6 @@ function lowercase_tib( f)
 function anytibbedcookies()
 {
 	var tibsfound = document.cookie.search('tibbed');
-	console.log(tibsfound);
 	if (tibsfound == -1)
 	{
 		var buttons = document.getElementsByClassName("bd button");
@@ -68,7 +66,7 @@ function anytibbedcookies()
 		{
 			buttons[i].className += " show"; 
 			console.log(buttons[i]);
-		};
+		}
 		return true;
 	}
 	return false;
