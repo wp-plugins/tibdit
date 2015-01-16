@@ -63,7 +63,7 @@ function anytibbedcookies()
 	console.log(tibsfound);
 	if (tibsfound == -1)
 	{
-		var buttons = document.getElementsByClassName("tooltip");
+		var buttons = document.getElementsByClassName("bd button");
 		for( i=0; i<buttons.length; i++)
 		{
 			buttons[i].className += " show"; 
