@@ -5,7 +5,7 @@ tiblog("#BOF");
  * Plugin Name: tibdit
  * Plugin URI: http://www.tibdit.com
  * Description: Collect tibs from readers.
- * Version: 1.2.32
+ * Version: 1.2.34
  * Author: Justin Maxwell / Jim Smith / Laxyo Solution Softs Pvt Ltd.
  * Author URI: 
  * Text Domain: tibdit
@@ -37,7 +37,7 @@ if (!function_exists('is_admin'))
   exit();
 }
 
-define( 'TIBDIT_VERSION', '1.2.22' );
+define( 'TIBDIT_VERSION', '1.2.34' );
 define( 'TIBDIT_RELEASE_DATE', date_i18n( 'F j, Y', '1397937230' ) );
 define( 'TIBDIT_DIR', plugin_dir_path( __FILE__ ) );
 define( 'TIBDIT_URL', plugin_dir_url( __FILE__ ) );

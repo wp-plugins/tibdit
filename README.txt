@@ -4,35 +4,27 @@ Donate link: n/a
 Tags: micropayments, microdonations, monetisation, monetization, fundraising,   button, integration, shortcode  
 Requires at least: 3.0.1  
 Tested up to: 3.9.3  
-Stable tag: 1.2.32 
+Stable tag: 1.2.30  
 License: GPL3  
 License URI: http://www.gnu.org/licenses/gpl-3.0.html  
 
-tibs are tiny payments typically around 15 pence (25 cents).  
-
-This plugin makes collecting tibs as either micropayments or microdonations simple for WordPress users.
-
-tib buttons are placed on the site using either widgets or shortcodes.
+tibs are tiny payments typically around 15p/25c. This plugin makes collecting tibs simple.
 
 === Description ===
+# Description
 
-> **tib**     /tɪb/  
+## tib 
+/tɪb/  
+*pl.* tibs,  *v.tr* tibbed  
+*s.a.* tibber, tibbee
 
->> *pl.* tibs,  *v.tr* tibbed  
->> *s.a.* tibber, tibbee
+**noun:**  
+A small online payment, typically around 15p (25¢), sent by a tibber to a tibbee, either as payment for access to content or a service, or as a gratuity.
 
-> **noun:**  
->>    A small online payment, typically around 15p (25¢), sent by a tibber to a tibbee, either as payment for access to content or a service, or as a gratuity.
+**verb:**  
+A request to tibdit to transfer a micro-payment, with a value previously specified by the tibber, to the tibbee.
 
-> **verb:**  
-
->>  A request to tibdit to transfer a micro-payment, with a value previously specified by the tibber, to the tibbee.
-
-.
-
-**tibdit**
-
-
+## tibdit
 tibdit provides a simple, original approach to collecting micropayments from visitors.
 
 Users, or *tibbers*, pre-define their *tib* amount with a value where they 'won't have to think twice', and purchase a bundle of these tibs.
@@ -43,69 +35,42 @@ This plugin automates the process for WordPress site operators, including the re
 
 To get a feel for how tibdit works, please visit http://demo.tibdit.com
 
-**feedback""
-
-We would really appreciate hearing any questions and/or feedback you might have  [@tibdit](https://twitter.com/tibdit) or at [feedback@tibdit.com](mailto:feedback@tibdit.com).
 
 
 == Installation ==
+#Installation
 
-1. Install and activate the tibdit plugin from the Plugins menu in your WordPress Dashboard.
+1. If required, manually extract te files to wp-content/plugins/tibdit - this step can be skipped for automated installs.  
 
-2. Go to the new tibdit page in the Settings menu of the Dashboard, read through the instructions there, and configure:  
-    * A title and intro text to appear when the widget is used,
-    
-    * Your bitcoin address,
-    
-    * How many days the site should acknowlege a users tib.
-    
-          The tibbing button is deactivated with a checkmark overlayed for this period.
-    
-1. Place either the widget, or the shortcodes [tib_post] and [tib_site] at the locations you wish to display a tib button.
+1. Activate the tibdit plugin from the Plugins menu in your WordPress dashboard.  
 
-tibdit provides a testmode, where you can experiment with the plugin and the tibdit service without using actual currency.  Details are at the bottom of the settings page.
-
-If bitcoin concerns you as perhaps to complex, follow the simple instructions on the settings page.  You can easily start collecting tibs now and get to grips with bitcoin later on.
+1. Go to the tibdit page in the Settings menu of the dashboard, read through the instructions there, and configure:  
+    * A title and intro text to appear when the widget is used
+    * Your bitcoin address
+    * How many days the site should acknowlege a users tib (for that user, the button is deactivated and a tickmark is overlayed)  
+    
+1. Place the widget, or the shortcodes [tib_post] and [tib_site] at the places on your site you wish to display the tib button  
 
 
 == Frequently Asked Questions ==
+## Questions
+### what is the difference between [tib_post] and [tib_site] 
 
-### what is tibdit? 
+The `[tib_post]` shortcode passes a subreference of `"WP_ID_nnn"` to tibdit, so it is the particular post with id of `nnn` that is being tibbed, and this post that the counter will track.   Per-post counters are persisted in post metadata.
 
-tibdit is a system that enables users to send microdonations and micropayments to sites publishing a tib button alongside their content or service.  Unlike other micropayment offerings, tibdit is designed so that these payments can be made 'without a second thought'.
-
-In time, this will result in your blog receiving many tiny donations if your site visitors are appreciative, rather than hardly any with other approaches to collecting donations.
-
-### what is a tib? 
-
-A tib is a user-specific pre-set value that is sent to sites with the user confirms the payment.
-
-### it sounds very complicated 
-
-It's really not.  We suggest you look at demo.tibdit.com, and the instructions on the plugin settings page, to see just how straightforward it is.
-
-### what is the difference between `[tib_post]` and `[tib_site]` 
-
-The `[tib_post]` shortcode passes a subreference of `"WP_ID_nnn"` to tibdit, so it is the particular post with the wordpress id of `nnn` that is being tibbed.  The returned tib count will show the total of tibs sent for just this post.
-
-Per-post counters are persisted in the wordpress post metadata.
-
-On the other hand `[tib_site]` always passes a subreference of `"WP_SITE"` to tibdit. This means the counter will include the total number of tibs from `[tib_site]` buttons across the wordpress site, because the subreference is constant.  
-
-The `"WP_SITE"` counter is persisted in the WordPress site options data.
+Conversely `[tib_site]` passes a subreference of `"WP_SITE"` and the counter will be for the total number of tibs with that subreference.  The counter is persisted in the WordPress site options data.
 
 ### what about the Widget 
 
-The widget also uses the options data to record the count of tibs, but you can manually specify a different subreference for each widget, giving each it's own counter, or share a subreference, or set it to `"WP_SITE"` if you wish.  
-
-The widget also lets you specify widget-specific headings, and a widget-specific bitcoin address - although this is not recommended.
+The widget also uses the options data to record the count of tibs, but you can specify a different subreference for each widget, giving each it's own counter, or share a subreference, or specify `"WP_SITE"` if you wish.  The widget also lets you specify widget-specific headings, and a widget-specific bitcoin address - although this is not recommended.
 
 ### how do the counters get set 
 
-Every time someone confirms a tib to some content of yours, we send back a token via the users browser, which is collected and processed by the Plugin. This token includes the total accumulated tibs for the unique combination of bitcoin address and subreference.  It is stored by the plugin inside WordPress so it can be displayed on the button when the page or post is displayed to a user.
+Every time someone confirms a tib to some content of yours, we send back a token, which is collected and processed by the Plugin. This token includes the total accumulated tibs for the unique combination of bitcoin address and subreference.
 
 
 == Screenshots ==
+##Screenshots
 
 1. The tib button in action.  These examples are 'testmode', the yellow beaker is shown only when the plugin is configured with a bitcoin testnet address.  
 
@@ -118,33 +83,29 @@ Every time someone confirms a tib to some content of yours, we send back a token
 
 == Changelog ==
 
-= 1.2.31 =
+= 1.2.34 =
 
-* Improved this README file.
-
-* Fixed an incompatibility with earlier versions of PHP.
+fixed tooltips
+CSS improvements
 
 
 = 1.2.30 =
 
-* Fixed a bug with plugin options not saving
+Fixed a bug with plugin options not saving
+Significantly increased the amount of bitcoin address validation. 
+Prevented setting save with invalid bitcoin address
+Further improved the CSS to avoid collissions with themes or other plugins.
+Added beta icon to widget and settings page
 
-* Significantly increased the amount of bitcoin address validation. 
-
-* Prevented save settings with invalid bitcoin address
-
-* Further improved the CSS to avoid collissions with themes or other plugins.
-
-* Added beta icon to widget and settings page
 
 = 1.2.22 =
 
-* Added .bd CSS class to avoid style collisions with themes or other plugins
+Added .bd CSS class to avoid style collisions with themes or other plugins
 
 = 1.2.21 = 
 
-* Fixed tooltip glitch
+Fixed tooltip glitch
 
 = 1.2.20 =
 
-* First version uploaded to wordpress.org
+First version uploaded to wordpress.org
