@@ -3,7 +3,7 @@ Contributors: Justin_Maxwell_
 Donate link: n/a  
 Tags: micropayments, microdonations, monetisation, monetization, fundraising,   button, integration, shortcode  
 Requires at least: 3.0.1  
-Tested up to: 3.9.3  
+Tested up to: 4.1  
 Stable tag: 1.2.35  
 License: GPL3  
 License URI: http://www.gnu.org/licenses/gpl-3.0.html  
@@ -120,6 +120,8 @@ Every time someone confirms a tib to some content of yours, we send back a token
 * screenshots added
 
 * versioning added to javascript resources for browser cache management
+
+* checked under WordPress 1.4
 
 = 1.2.34 =
 
