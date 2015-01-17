@@ -113,14 +113,11 @@ Every time someone confirms a tib to some content of yours, we send back a token
 
 == Changelog ==
 
-= 1 2.35
+= 1 2.35 =
 
 * README tweaks
-
 * screenshots added
-
 * versioning added to javascript resources for browser cache management
-
 * checked under WordPress 1.4
 
 = 1.2.34 =
