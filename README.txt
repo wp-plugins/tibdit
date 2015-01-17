@@ -4,7 +4,7 @@ Donate link: n/a
 Tags: micropayments, microdonations, monetisation, monetization, fundraising,   button, integration, shortcode  
 Requires at least: 3.0.1  
 Tested up to: 3.9.3  
-Stable tag: 1.2.34  
+Stable tag: 1.2.35  
 License: GPL3  
 License URI: http://www.gnu.org/licenses/gpl-3.0.html  
 
@@ -60,6 +60,8 @@ tibdit provides a testmode, where you can experiment with the plugin and the tib
 
 If bitcoin concerns you as perhaps to complex, follow the simple instructions on the settings page.  You can easily start collecting tibs now and get to grips with bitcoin later on.
 
+tibdit would be very grateful to here about your experiences installing and configuring the plugin at feedback@tibdit.com
+
 
 == Frequently Asked Questions ==
 
@@ -102,7 +104,7 @@ Every time someone confirms a tib to some content of yours, we send back a token
 
 1. The tib button in action.  These examples are 'testmode', the yellow beaker is shown only when the plugin is configured with a bitcoin testnet address.  
 
-2. When a tib button is clicked, the tibdit application opens in a new window/tab (popup where allowed).  If the user is an existing user with a balance of unspent tibs, they are taken directly to the tib confirmation stage.  
+2. When a tib button is clicked, the tibdit application opens in a new popup window or tab.  If the user is an existing user with a balance of unspent tibs, they are taken directly to the tib confirmation stage.  
 
 3. After the user confirms the tib, the popup window is closed, which triggers the WordPress window to refresh.  Any paid-for content is revealed, and the tib button is replaced by a static acknowledgement of the tib being received.  
 
@@ -111,7 +113,13 @@ Every time someone confirms a tib to some content of yours, we send back a token
 
 == Changelog ==
 
+= 1 2.35
 
+* README tweaks
+
+* screenshots added
+
+* versioning added to javascript resources for browser cache management
 
 = 1.2.34 =
 
@@ -120,6 +128,10 @@ Every time someone confirms a tib to some content of yours, we send back a token
 * CSS improvements
 
 * svn glitch
+
+= 1.2.32
+
+* Hopefully removed a .js conflict when certain scripts are combined together (and minified) by an unrelated WP plugin.
 
 = 1.2.31 =
 

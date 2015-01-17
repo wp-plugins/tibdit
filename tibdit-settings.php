@@ -1,7 +1,7 @@
 <?PHP 
 
  // tibdit plugin settings
- // Version: 1.2.30
+ // Version: 1.2.40
  // License: GPL3
 
 
