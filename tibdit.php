@@ -5,7 +5,7 @@ tiblog("#BOF");
  * Plugin Name: tibdit
  * Plugin URI: http://www.tibdit.com
  * Description: Collect tibs from readers.
- * Version: 1.2.34
+ * Version: 1.2.35
  * Author: Justin Maxwell / Jim Smith / Laxyo Solution Softs Pvt Ltd.
  * Author URI: 
  * Text Domain: tibdit
@@ -37,7 +37,7 @@ if (!function_exists('is_admin'))
   exit();
 }
 
-define( 'TIBDIT_VERSION', '1.2.34' );
+define( 'TIBDIT_VERSION', '1.2.35' );
 define( 'TIBDIT_RELEASE_DATE', date_i18n( 'F j, Y', '1397937230' ) );
 define( 'TIBDIT_DIR', plugin_dir_path( __FILE__ ) );
 define( 'TIBDIT_URL', plugin_dir_url( __FILE__ ) );
@@ -379,11 +379,11 @@ function get_tib_token()    // On page load (wp_head) check for tib token (ie pa
       {
       	$plugurl = plugin_dir_url( __FILE__ );
       	tiblog("tibdit_plugin_enqueue() ". $plugurl);
-        wp_enqueue_style( 'tibdit_plugin', $plugurl.'/tibbee.css' );
+        wp_enqueue_style( 'tibdit_plugin', $plugurl.'/tibbee.css', array(), "1.2.35");
         tiblog( "tibdit_plugin$plugurl/tibbee.css");
-        wp_enqueue_script( 'tibdit_plugin', $plugurl.'/tib-functions.js' );
+        wp_enqueue_script( 'tibdit_plugin', $plugurl.'/tib-functions.js', array(), "1.2.35" );
         // wp_enqueue_script( 'tibdit_plugin', $plugurl.'/tibdit-settings.js' );        
-        wp_enqueue_script( 'tibdit_plugin-bottom', $plugurl.'/tib-functions-bottom.js',"","",true );
+        wp_enqueue_script( 'tibdit_plugin-bottom', $plugurl.'/tib-functions-bottom.js',array(),"1.2.35",true );
       }
 
     }

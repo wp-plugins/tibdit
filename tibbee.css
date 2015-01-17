@@ -1,4 +1,4 @@
-/*v1.2.34*/
+/*v1.2.35*/
 
 .bd.widget
 {
@@ -173,7 +173,7 @@ div.bd.button span.annotation
 
 div.bd.button .count
 {
-	vertical-align: text-top;   
+	vertical-align: middle;   
 	color:#CCC;
 	font-size: large;
 	display: inline;
