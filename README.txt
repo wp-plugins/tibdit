@@ -8,7 +8,7 @@ Stable tag: 1.2.36
 License: GPL3  
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Demo video: https://www.youtube.com/embed/Nqpkws4YyFM?enablejsapi=1&iv_load_policy=3&playerapiid=rem0_youtube_api&disablekb=1&wmode=transparent&controls=0&showinfo=0&modestbranding=0&rel=0&loop=0&cc_load_policy=1&html5=1&autoplay=0&origin=http%3A%2F%2Ftibdit.com
+Demo video: https://www.youtube.com/watch?v=Nqpkws4YyFM
 
 Demo scenarios: http://demo.tibdit.com/  
 
