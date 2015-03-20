@@ -1,1 +1,1 @@
-anytibbedcookies();
+bd_plugin_anytibbedcookies();

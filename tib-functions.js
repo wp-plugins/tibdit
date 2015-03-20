@@ -1,17 +1,17 @@
-// version 1.2.35
+// version 1.3
 
 var tibWindow = null;
 var tibWindowCheck = null;
 
-function tib(payaddr, subref) // open tibdit window, watch for closing
+function bd_plugin_tib(payaddr, subref) // open tibdit window, watch for closing
 { 
 	tibWindow= window.open("https://tib.tibdit.com/t/" + payaddr + "/" + subref + "?callback_url=" + encodeURIComponent(window.location) ,
 		"tibdit", "height=600,width=700,menubar=no,location=no,resizable=no,status=no");
-    tibWindowCheck= setInterval(function(){tibbedReload();}, 1000);   // 100);    
+    tibWindowCheck= setInterval(function(){bd_plugin_tibbedReload();}, 1000);   // 100);    
     tibWindow.focus();
 }
 
-function tibbedReload() // reload on tibdit window close
+function bd_plugin_tibbedReload() // reload on tibdit window close
 {
 	if (tibWindow.closed) 
 	{
@@ -20,7 +20,7 @@ function tibbedReload() // reload on tibdit window close
 	} 
 }
 
-function getCookie(cname)   // get the cookie based on a name
+function bd_plugin_getCookie(cname)   // get the cookie based on a name
 {
 	var name = cname + "=";
 	var ca = document.cookie.split(';');
@@ -33,12 +33,12 @@ function getCookie(cname)   // get the cookie based on a name
 	return "";
 }
 
-function tibbed(subref)  // tell me if there are cookies
+function bd_plugin_tibbed(subref)  // tell me if there are cookies
 {
-	return (getCookie('tibbed_'+subref)) ? true : false;
+	return (bd_plugin_getCookie('tibbed_'+subref)) ? true : false;
 }
 
-function setCookie(lifespan, subref)    // set the tibbed cookie and give it a lifespan (minutes / days)
+function bd_plugin_setCookie(lifespan, subref)    // set the tibbed cookie and give it a lifespan (minutes / days)
 {
   var expires = new Date();
   expires.setTime(expires.getTime() + lifespan * 60 * 1000 ); // -> microseconds
@@ -47,7 +47,7 @@ function setCookie(lifespan, subref)    // set the tibbed cookie and give it a l
 }
 
 
-function lowercase_tib( f)
+function bd_plugin_lowercase_tib( f)
 {
   ss = f.selectionStart;
   se = f.selectionEnd;
@@ -56,7 +56,7 @@ function lowercase_tib( f)
 }
 
 
-function anytibbedcookies()
+function bd_plugin_anytibbedcookies()
 {
 	var tibsfound = document.cookie.search('tibbed');
 	if (tibsfound == -1)

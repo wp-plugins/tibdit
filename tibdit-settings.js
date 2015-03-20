@@ -1,4 +1,8 @@
-// v1.2.34
+// v1.3
+
+// jQuery(document).ready(function($){
+//     $('.my-color-field').wpColorPicker();
+// });
 
 function payaddr_change( f, plugurl)
 {
@@ -36,13 +40,36 @@ function payaddr_change( f, plugurl)
     submit.disabled = true;
   }
 
+  blockchain.disabled = submit.disabled;
+
+
   if( valid.indexOf(f.value.substr(0, 1)) >= 2 )
   {
     payaddr_field_status.innerHTML=
       payaddr_field_status.innerHTML.concat("&ensp;<img src='" + plugurl + "/testmode-icon-24px.png' style='width: 1em; vertical-align: middle'>");
+
+      // document.getElementById('blockchain').onclick="{window.open('https://www.biteasy.com/testnet/addresses/" + f.value + "')}";
+      // document.getElementById('blockchain').onclick=="{window.open('http://tibdit.com')}";
+
   }
+  // else
+  // {
+  //   document.getElementById('blockchain').onclick="{window.open('https://www.biteasy.com/addresses/" + f.value + "')}";
+  // }
 }
 
+function biteasy_blockchain()
+{
+  valid = "132mn";
+  if ( valid.indexOf(document.getElementById('payaddr').value.substr(0, 1)) >= 2 )
+  {
+    window.open("https://www.biteasy.com/testnet/addresses/" + document.getElementById("payaddr").value);
+  }
+  else if (valid.indexOf(document.getElementById('payaddr').value.substr(0, 1)) != -1) 
+  {
+    window.open("https://www.biteasy.com/addresses/" + document.getElementById('payaddr').value);
+  };
+}
 
 function base54_clean( f) 
 {
@@ -53,7 +80,7 @@ function base54_clean( f)
 }
 
 
-function lowercase_tib( f)
+function bd_plugin_lowercase_tib( f)
 {
   ss = f.selectionStart;
   se = f.selectionEnd;
