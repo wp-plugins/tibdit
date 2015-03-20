@@ -4,13 +4,13 @@ Donate link: n/a
 Tags: micropayments, microdonations, monetisation, monetization, fundraising,   button, integration, shortcode  
 Requires at least: 3.0.1  
 Tested up to: 4.1  
-Stable tag: 1.2.36
+Stable tag: 1.3  
 License: GPL3  
-License URI: http://www.gnu.org/licenses/gpl-3.0.html
+License URI: http://www.gnu.org/licenses/gpl-3.0.html  
 
 Demo video: https://www.youtube.com/watch?v=Nqpkws4YyFM
 
-Demo scenarios: http://demo.tibdit.com/  
+Demo scenarios: http://demo.tibdit.com/
 
 tibs are tiny payments typically around 15 pence (25 cents).  
 
@@ -117,7 +117,21 @@ Every time someone confirms a tib to some content of yours, we send back a token
 
 == Changelog ==
 
-= 1 2.35 =
+= 1.3 = 
+
+* Tib post feature added
+* Custom colour feature added
+* Bugs fixed
+
+= 1.2.36 = 
+
+* Expanded the help and information and moved it into the standard WordPress context help system
+* Removed 'beta' indicator
+* Removed bitcoin address from widget settings - all widgets now use the bitcoin address in the plugin settings
+* Added customisation of widget background tint
+
+
+= 1.2.35 =
 
 * README tweaks
 * screenshots added

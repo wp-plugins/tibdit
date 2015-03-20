@@ -1,6 +1,6 @@
 <?php
 
-namespace LinusU\Bitcoin;
+// namespace LinusU\Bitcoin;
 
 class AddressValidator {
 

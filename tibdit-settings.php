@@ -1,7 +1,7 @@
 <?PHP 
 
  // tibdit plugin settings
- // Version: 1.2.40
+ // Version: 1.3
  // License: GPL3
 
 
@@ -20,10 +20,12 @@
     See <http://www.gnu.org/licenses/> for the full text of the 
     GNU General Public License.  
 */
-define( 'TIBDIT_DIR', plugin_dir_path( __FILE__ ) );
-define( 'TIBDIT_URL', plugin_dir_url( __FILE__ ) );
+if( !defined( 'TIBDIT_DIR')) define( 'TIBDIT_DIR', plugin_dir_path( __FILE__ ) );
+if( !defined( 'TIBDIT_URL')) define( 'TIBDIT_URL', plugin_dir_url( __FILE__ ) );
 
-use LinusU\Bitcoin\AddressValidator;
+// use LinusU\Bitcoin\AddressValidator;
+// use AddressValidator;
+// include 'AddressValidator.php';
  
 tiblog("admin page");
 
@@ -43,10 +45,13 @@ if (!class_exists("tibdit_settings"))
     (  
       'title' => 'tibdit',
       'intro' => 'Please drop a microdonation in my tibjar',
-      'acktime' => 3
+      'acktime' => 3,
+      'colour' => '#806020'
     );
 
     private $options; 
+
+    private $help_hook;
 
     function __construct() 
     { 
@@ -59,12 +64,25 @@ if (!class_exists("tibdit_settings"))
       $this->page_title = "tibdit plugin settings";
       $this->section = "tibdit_main_section";
       $this->list = "tibdit_tibs_list";
+      $this->blockchain = "tibdit_blockchain";
 
       add_action( 'admin_menu', array($this, 'add_admin_menu') );
       add_action( 'admin_init', array($this, 'init_admin_page') );
       add_action( 'admin_enqueue_scripts', array($this,'tibdit_settings_enqueue') );
+      // add_action( 'admin_enqueue_scripts', array($this, 'mw_enqueue_color_picker') );
+      add_filter( 'contextual_help', array($this, 'admin_help'), 10, 3);
+      $plugin = plugin_basename(__FILE__); 
+      tiblog("plugin_action_links_$plugin");
+      add_filter( "plugin_action_links_tibdit/tibdit.php", array($this,'bd_plugins_page'));
     }
 
+    // Add settings link on plugin page
+    function bd_plugins_page($links) { 
+      tiblog("bd_plugins_page() " . var_dump($inks));
+      $settings_link = '<a href="options-general.php?page=tibdit_options#help">Settings &amp; Help</a>'; 
+      array_unshift($links, $settings_link); 
+      return $links; 
+    }
 
     function init_admin_page()
     {
@@ -79,10 +97,11 @@ if (!class_exists("tibdit_settings"))
       
       add_settings_section($this->section, '', array($this, 'main_section'), $this->page_id);
 
-      add_settings_field('title', 'Widget Heading', array($this, 'title_field'), $this->page_id, $this->section);
-      add_settings_field('intro', 'Widget Intro', array($this, 'intro_field'), $this->page_id, $this->section);
+      // add_settings_field('title', 'Widget Heading', array($this, 'title_field'), $this->page_id, $this->section);
+      // add_settings_field('intro', 'Widget Intro', array($this, 'intro_field'), $this->page_id, $this->section);
       add_settings_field('payaddr', 'Bitcoin Address', array($this, 'payaddr_field'), $this->page_id, $this->section);
       add_settings_field('acktime', 'Acknowledge tib for', array($this, 'acktime_field'), $this->page_id, $this->section);
+      // add_settings_field('widget_colour', 'Widget background shading', array($this, 'widget_colour'), $this->page_id, $this->section);
 
       if (get_option('tib_list'))
       {
@@ -91,6 +110,51 @@ if (!class_exists("tibdit_settings"))
       }
     }
 
+    function admin_help($contextual_help, $screen_id, $screen) {
+      tiblog("admin_help() ");
+      include ('tibdit-settings-help.php');
+
+      if ($screen_id == $this->help_hook) {
+         // $contextual_help = 'This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.';
+          $screen->add_help_tab( array( 
+            'id' => "bd_help_overview",            //unique id for the tab
+            'title' => "overview",      //unique visible title for the tab
+            'content' => $bd_help_overview,  //actual help text
+            'callback' => $callback //optional function to callback
+          ) );
+          $screen->add_help_tab( array( 
+            'id' => "bd_help_settings",            //unique id for the tab
+            'title' => "settings",      //unique visible title for the tab
+            'content' => $bd_help_settings,  //actual help text
+            'callback' => $callback //optional function to callback
+          ) );
+          $screen->add_help_tab( array( 
+           'id' => "bd_help_bitcoin",            //unique id for the tab
+           'title' => "bitcoin",      //unique visible title for the tab
+           'content' => $bd_help_bitcoin,  //actual help text
+           'callback' => $callback //optional function to callback
+          ) );
+          $screen->add_help_tab( array( 
+            'id' => "bd_help_shortcodes",            //unique id for the tab
+            'title' => "shortcodes",      //unique visible title for the tab
+            'content' => $bd_help_shortcodes,  //actual help text
+            'callback' => $callback //optional function to callback
+          ) );
+          $screen->add_help_tab( array( 
+            'id' => "bd_help_widgets",            //unique id for the tab
+            'title' => "widgets",      //unique visible title for the tab
+            'content' => $bd_help_widgets,  //actual help text
+            'callback' => $callback //optional function to callback
+          ) );        
+          $screen->add_help_tab( array( 
+            'id' => "bd_help_testmode",            //unique id for the tab
+            'title' => "testmode",      //unique visible title for the tab
+            'content' => $bd_help_testmode,  //actual help text
+            'callback' => $callback //optional function to callback
+            ) );
+      }
+      return $contextual_help;
+    }
 
     function tibdit_settings_enqueue()
     {
@@ -103,7 +167,11 @@ if (!class_exists("tibdit_settings"))
       wp_enqueue_script( 'sha256', $plugurl.'crypto-sha256.js');
       wp_enqueue_script( 'tibdit_plugin_settings', $plugurl.'tibdit-settings.js' );
       wp_enqueue_script( 'btc_payaddr_validator', $plugurl.'btcaddr_validator.js' );
-      wp_enqueue_style( 'tibdit_plugin', $plugurl.'/tibbee.css' );
+      wp_enqueue_style( 'tibdit_plugin', $plugurl.'tibbee.css' );
+
+      wp_enqueue_style( 'wp-color-picker' );
+      wp_enqueue_script( 'wp-color-picker' );
+      wp_enqueue_script( 'bd-admin-bottom', $plugurl.'tibdit-settings-bottom.js', false, false, true );
     }
 
 
@@ -113,33 +181,8 @@ if (!class_exists("tibdit_settings"))
 
       tiblog("||ADM form section"); 
 
-      echo
-<<<INSTRUCTIONS
-      <h4><u>bitcoin</u></h4>
-      <p>To collect tibs you need a bitcoin address.  You have many options available If you do not already have an address you wish to use.  One 
-      very fast and very simple way is to go to <a href=https://bitaddress.org style="font-family: monospace;" target='_tibdit'>bitaddress.org</a> and follow the instructions 
-      there.  While not as secure as more complex options, this is suitable if you want to get set up and do not expect to receive a large 
-      amount of money in a short timeframe.  If you are UK/EU based and would rather convert your bitcoin easily into GBP/EUR, then you may 
-      want to try <a href=https://cryptopay.me/ style="font-family: monospace;" target='_tibdit'>Cryptopay</a>.  If you want a secure online bitcoin wallet to accumulate bitcoin, 
-      then we suggest <a style="font-family: monospace;" href=https://blockchain.info/wallet>Blockchain.info</a>.</p>
-      <p>Regardless of how you obtain your a bitcoin address, it is very important that you keep the secret private key safe and secure.  For 
-      example, you might want to print it twice and put the copies in different places. If you lose your private key, you will have lost any 
-      bitcoin at the corresponding address. If someone else gets hold of your key, they can easily steal your bitcoin!  You only need your private key when you want to
-      transfer or spend your bitcoin.</p>
-      <p>Enter your public bitcoin address below, not your Private Key.  A green tick will show when you have entered a valid bitcoin address.</p>
-      <h4><u>shortcodes</u></h4>
-      <p>Use<span style="font-family: monospace;"> [tib_post] </span>to place a tib button specific to individual posts.  The tib counter 
-      and subref will be specific to the WordPress post ID.&emsp;
-      Use<span style="font-family: monospace;"> [tib_site] </span> to place a 'site wide' tib button that will use the same counter and 
-      subref wherever it appears. &emsp;You can also override settings for individual shortcodes.  
-      For example<span style="font-family: monospace;"> [tib_post payaddr="bitcoinaddress"]  </span> or<span style="font-family: monospace;"> [tib_site title="sometext"]  </span>.
-      <p>By enclosing part of a post in shortcode tags like this:&emsp;<span style="font-family: monospace;"> <i>beginning-of-post...</i> [tib_post] <i>...rest-of-post...</i> [/tib_post] </span>
-      the rest-of-post part will be shown only after the reader had paid a tib. 
-      <h4><u>widget areas</u></h4>
-      <p>You can also use the Widgets settings under the Appearance menu.  tib widgets placed from there can have different settings,
-      including for the bitcoin address, but will default to the settings on this page if left blank.  It is recommended to always set a 
-      subref for widgets placed using the Widget Appearance settings.</p>
-INSTRUCTIONS;
+      echo '<br>Please refer to the <a class="bd-admin-link" onclick="jQuery(\'a#contextual-help-link\').trigger(\'click\');"> plugin help</a> for information and instructions.';
+
     }
 
     function list_section()
@@ -184,28 +227,28 @@ INSTRUCTIONS;
         echo("</table><br><br>");
     }
 
-    function title_field( $args )
-    {
-      $slug= "title";
-      $value= $this->options[$slug];
+    // function title_field( $args )
+    // {
+    //   $slug= "title";
+    //   $value= $this->options[$slug];
 
-      echo "<input id='$slug' name='$this->settings_field[$slug]' value='$value'
-        class='bd' type='text' size=20 maxlength=20 onchange='lowercase_tib(this);' 
-        onkeypress='this.onchange();' onpaste='this.onchange();' oninput='this.onchange();'  >";
-      echo "<span id='title_field_status'></span>";
-    }
+    //   echo "<input id='$slug' name='$this->settings_field[$slug]' value='$value'
+    //     class='bd' type='text' size=20 maxlength=20 onchange='lowercase_tib(this);' 
+    //     onkeypress='this.onchange();' onpaste='this.onchange();' oninput='this.onchange();'  >";
+    //   echo "<span id='title_field_status'></span>";
+    // }
 
 
-    function intro_field( $args )
-    {
-      $slug= "intro";
-      $value= $this->options[$slug];
+    // function intro_field( $args )
+    // {
+    //   $slug= "intro";
+    //   $value= $this->options[$slug];
 
-      echo "<input id='$slug' name='$this->settings_field[$slug]' value='$value'";
-      echo "class='bd' type='text' size=100 maxlength=100 onchange='lowercase_tib(this);'
-         onkeypress='this.onchange();' onpaste='this.onchange();' oninput='this.onchange();'  >";
-      echo "<span id='intro_field_status'></span>";
-    }
+    //   echo "<input id='$slug' name='$this->settings_field[$slug]' value='$value'";
+    //   echo "class='bd' type='text' size=100 maxlength=100 onchange='lowercase_tib(this);'
+    //      onkeypress='this.onchange();' onpaste='this.onchange();' oninput='this.onchange();'  >";
+    //   echo "<span id='intro_field_status'></span>";
+    // }
 
 
     function payaddr_field( $args )
@@ -220,6 +263,7 @@ INSTRUCTIONS;
         onkeypress='this.onchange();' onpaste='this.onchange();' oninput='this.onchange();'  >"; 
 
       echo "<span class='bd status' id='payaddr_field_status'>&emsp;?</span>";
+
     }
 
 
@@ -234,6 +278,17 @@ INSTRUCTIONS;
       echo "&emsp;days &emsp;(or minutes if a testmode / testnet address)";
     }
 
+    function widget_colour( $args )
+    {
+      $slug="widget_colour";
+      $value=$this->options[$slug];
+
+      echo "<input id='$slug' name='$this->settings_field[$slug]' value='$value'
+        class='bd bd-colourp' type='text' data-default-color='$value' >"; 
+
+
+    }
+
 
     function add_admin_menu() 
     {
@@ -242,7 +297,7 @@ INSTRUCTIONS;
         return;
 
       // $this->pagehook = $page =  add_options_page( $this->page_title, 'tibdit', 'manage_options', $this->page_id, array($this,'render') );
-      add_options_page( $this->page_title, 'tibdit', 'manage_options', $this->page_id, array($this,'render') );
+      $this->help_hook = add_options_page( $this->page_title, 'tibdit', 'manage_options', $this->page_id, array($this,'render') );
     }
      
 
@@ -258,14 +313,14 @@ INSTRUCTIONS;
         update_option( 'tib_list', true);   //persist request for list of tibs through page multiple refreshes
       }
 
-      if( isset($opts_in['title']))
-        $new_options['title']= sanitize_text_field($opts_in['title']);
-      else
+      // if( isset($opts_in['title']))
+      //   $new_options['title']= sanitize_text_field($opts_in['title']);
+      // else
         $new_options['title']= tibdit_settings::$default_settings['title'];
 
-      if( isset($opts_in['intro']))
-        $new_options['intro']= sanitize_text_field($opts_in['intro']);
-      else
+      // if( isset($opts_in['intro']))
+      //   $new_options['intro']= sanitize_text_field($opts_in['intro']);
+      // else
         $new_options['intro']= tibdit_settings::$default_settings['intro'];
 
       if( isset($opts_in['payaddr']) && strlen($opts_in['payaddr']) > 2)
@@ -284,6 +339,11 @@ INSTRUCTIONS;
       else
         $new_options['acktime']= tibdit_settings::$default_settings['acktime'];
 
+      // if( isset($opts_in['widget_colour']))
+      //   $new_options['widget_colour'] = ($opts_in['widget_colour']);
+      // else
+      //   $new_options['widget_colour']= tibdit_settings::$default_settings['widget_colour'];
+      
       tiblog("||ADM sanitise: options " . var_export($opts_in, true));
       tiblog("||ADM sanitise: new_options " . var_export($new_options, true));
       
@@ -295,28 +355,28 @@ INSTRUCTIONS;
     {
       // if (! current_user_can('manage_options'))
       //   wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+      // $mode="";
+      if( substr($this->options['payaddr'],0,1) == 'm' or substr($this->options['payaddr'],0,1) == 'n' )
+      {
+        $mode="/testnet";
+      }
       $plugurl = plugin_dir_url( __FILE__ );
       tiblog("admin render");
-      echo "<div class='wrap'><h2>$this->page_title       <img class='beta' src='$plugurl/beta-35px.png' alt='beta'/></h2>";
+      echo "<div class='wrap'>";
+      echo "<h2>$this->page_title</h2>";
       echo "<form method='post' action='options.php' class='bd';>";
       settings_fields( $this->settings_field );  
       do_settings_sections( $this->page_id );
       submit_button( 'Save Changes', 'primary', 'submit', false); 
       echo("&emsp;");
       submit_button( 'list tib counts', 'secondary', 'list', false, array( 'onclick' => "{}" ));
-      echo 
-<<<TESTMODE
-        <h4><u>tibdit testmode</u>&emsp;<img src='$plugurl/testmode-icon-24px.png' style='width: 1.3em; vertical-align: middle'></h4>
-        <p>Bitcoin addresses that start with <span style="font-family: monospace;">'m'</span> or <span style="font-family: monospace;">'n'</span> are 'testnet' addresses that can be used readily with no actual money or value involved.  
-        tibdit will detect a testnet address and trigger testmode, which allows anyone to experiment with tibbing at no risk.  Testmode is indicated with the yellow beaker icon. Conversely,
-        Bitcoin addresses that start with a <span style="font-family: monospace;">'1'</span> are production, or 'mainnet' addresses; users need to have purchased a bundle of real tibs 
-        to tib 'mainnet' addresses.  The bitcoin testnet and mainnet are completely seperate, there is no risk of spending real bitcoins on
-        the testnet, or the reverse.</p>
-        <p>You can generate you own testnet bitcoin address in just a few seconds at 
-        <a style="font-family: monospace;" href="https://www.bitaddress.org/bitaddress.org-v2.9.3-SHA1-7d47ab312789b7b3c1792e4abdb8f2d95b726d64.html?testnet=true">bitaddress testnet edition</a>.</p>
-TESTMODE;
+      submit_button( 'balance', 'secondary', 'blockchain', false, array( 'onclick' => "{biteasy_blockchain();}"));
+      
       echo "<script>payaddr.onchange();</script>";
       echo "</form></div>";
+  
+
+
     }
   } // end class
 } // end if
