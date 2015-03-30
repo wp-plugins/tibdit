@@ -76,15 +76,16 @@ if (!class_exists("tibdit_settings"))
       add_filter( "plugin_action_links_tibdit/tibdit.php", array($this,'bd_plugins_page'));
     }
 
-    // Add settings link on plugin page
-    function bd_plugins_page($links) { 
+  // Add settings link on plugin page
+  function bd_plugins_page($links) 
+    { 
       tiblog("bd_plugins_page() " . var_dump($inks));
       $settings_link = '<a href="options-general.php?page=tibdit_options#help">Settings &amp; Help</a>'; 
       array_unshift($links, $settings_link); 
       return $links; 
     }
 
-    function init_admin_page()
+  function init_admin_page()
     {
       add_option( $this->settings_field, tibdit_settings::$default_settings );
 
@@ -110,7 +111,8 @@ if (!class_exists("tibdit_settings"))
       }
     }
 
-    function admin_help($contextual_help, $screen_id, $screen) {
+    function admin_help($contextual_help, $screen_id, $screen) 
+    {
       tiblog("admin_help() ");
       include ('tibdit-settings-help.php');
 
@@ -244,11 +246,13 @@ if (!class_exists("tibdit_settings"))
     //   $slug= "intro";
     //   $value= $this->options[$slug];
 
-    //   echo "<input id='$slug' name='$this->settings_field[$slug]' value='$value'";
-    //   echo "class='bd' type='text' size=100 maxlength=100 onchange='bd_lowercase_tib(this);'
-    //      onkeypress='this.onchange();' onpaste='this.onchange();' oninput='this.onchange();'  >";
-    //   echo "<span id='intro_field_status'></span>";
+
+    // echo "<input id='$slug' name='$this->settings_field[$slug]' value='$value'";
+    // echo "class='bd' type='text' size=100 maxlength=100 onchange='bd_lowercase_tib(this);'
+    //    onkeypress='this.onchange();' onpaste='this.onchange();' oninput='this.onchange();'  >";
+    // echo "<span id='intro_field_status'></span>";
     // }
+
 
 
     function payaddr_field( $args )

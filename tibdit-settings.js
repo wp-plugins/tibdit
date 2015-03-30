@@ -4,7 +4,7 @@
 //     $('.my-color-field').wpColorPicker();
 // });
 
-function payaddr_change( f, plugurl)
+function bd_payaddr_change( f, plugurl)
 {
   bd_base54_clean( f);
   valid = "132mn";
