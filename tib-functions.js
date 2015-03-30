@@ -1,4 +1,4 @@
-// version 1.3
+// version 12
 
 var tibWindow = null;
 var tibWindowCheck = null;

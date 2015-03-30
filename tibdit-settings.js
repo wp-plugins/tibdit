@@ -1,4 +1,4 @@
-// v1.3
+// version 13
 
 // jQuery(document).ready(function($){
 //     $('.my-color-field').wpColorPicker();
@@ -6,7 +6,7 @@
 
 function payaddr_change( f, plugurl)
 {
-  base54_clean( f);
+  bd_base54_clean( f);
   valid = "132mn";
 
   if( f.value === "")
@@ -71,7 +71,7 @@ function biteasy_blockchain()
   };
 }
 
-function base54_clean( f) 
+function bd_base54_clean( f) 
 {
   ss = f.selectionStart;
   se = f.selectionEnd;
