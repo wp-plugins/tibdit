@@ -5,7 +5,7 @@ tiblog("#BOF");
  * Plugin Name: tibdit
  * Plugin URI: http://www.tibdit.com
  * Description: Collect tibs from readers.
- * Version: 1.3
+ * Version: 1.3.1
  * Author: Justin Maxwell / Jim Smith / Laxyo Solution Softs Pvt Ltd.
  * Author URI: 
  * Text Domain: tibdit
@@ -37,7 +37,7 @@ if (!function_exists('is_admin'))
   exit();
 }
 
-define( 'TIBDIT_VERSION', '1.3' );
+define( 'TIBDIT_VERSION', '1.3.1' );
 define( 'TIBDIT_RELEASE_DATE', date_i18n( 'F j, Y', '1397937230' ) );
 define( 'TIBDIT_DIR', plugin_dir_path( __FILE__ ) );
 define( 'TIBDIT_URL', plugin_dir_url( __FILE__ ) );
@@ -46,8 +46,7 @@ define( 'TIBDIT_URL', plugin_dir_url( __FILE__ ) );
 
 $plugurl = plugin_dir_url( __FILE__ );
 
-
-function get_tib_token()    // On page load (wp_head) check for tib token (ie page load is tibdit callback) 
+function bd_get_tib_token()    // On page load (wp_head) check for tib token (ie page load is tibdit callback) 
 { 
 
   $token = ( get_query_var( 'tibdit' ) ) ? get_query_var( 'tibdit' ) : 1;
@@ -68,32 +67,32 @@ function get_tib_token()    // On page load (wp_head) check for tib token (ie pa
     // insert page load javascript to set user cookie for subref, and close
     echo "<script> bd_plugin_setCookie($acktime,'$subref'); x=window.open('','_self'); x.close(); </script>";    
 
-    tiblog("get_tib_token(): token " . var_export($token, true));
+    tiblog("bd_get_tib_token(): token " . var_export($token, true));
 
     // tiblog("callback: " . $SERVER["REQ"]);
 
 		if (substr($subref, 0, 3) != "WP_") 
-			tiblog( "get_tib_token() - not a WP_ subref! #$subref %$tibcount");  // need to force WP_ for widget
+			tiblog( "bd_get_tib_token() - not a WP_ subref! #$subref %$tibcount");  // need to force WP_ for widget
 		elseif ($subref == "WP_SITE")    // [TIB_SITE]
 		{   
-			tiblog("get_tib_token() - site tibbed #$subref %$tibcount");  
+			tiblog("bd_get_tib_token() - site tibbed #$subref %$tibcount");  
 			update_option("tib_count_".$subref, $tibcount);
 		}
 		elseif (substr($subref, 3,3) == "ID_" && intval(substr($subref, 6)) > 0)  // [TIB_POST]
 		{
-			tiblog("get_tib_token() - post tibbed #$subref %$tibcount");
+			tiblog("bd_get_tib_token() - post tibbed #$subref %$tibcount");
 			update_post_meta(intval(substr($subref, 6)), "tib_count", $tibcount);
 			tiblog(get_post_meta( intval(substr($subref, 6)), "tib_count", true ));
 		}
 		else        // WIDGET - arbitrary subref
 		{
-			tiblog( "get_tib_token() - Couldn't parse WP_ token  #$subref %$tibcount ~".substr($subref, 6));
+			tiblog( "bd_get_tib_token() - Couldn't parse WP_ token  #$subref %$tibcount ~".substr($subref, 6));
 			update_option("tib_count_".$subref, $tibcount);
 		}
   }
   else
   { 
-  	tiblog("get_tib_token() - no tib token");
+  	tiblog("bd_get_tib_token() - no tib token");
     return false; 
   }
 }
@@ -131,7 +130,7 @@ function get_tib_token()    // On page load (wp_head) check for tib token (ie pa
         add_action('init', array($this,'init') );
         add_action('admin_init', array($this,'admin_init') );
         // add_action('admin_menu', array($this,'add_admin_menu') );
-        add_action('wp_head', 'get_tib_token');
+        add_action('wp_head', 'bd_get_tib_token');
 				add_action('wp_enqueue_scripts', array($this,'tibdit_plugin_enqueue') );
         add_filter('query_vars', array($this,'add_query_vars_filter') );
 
@@ -468,11 +467,11 @@ function get_tib_token()    // On page load (wp_head) check for tib token (ie pa
         {
         	$plugurl = plugin_dir_url( __FILE__ );
         	tiblog("tibdit_plugin_enqueue() ". $plugurl);
-          wp_enqueue_style( 'tibdit_plugin', $plugurl.'/tibbee.css', array(), "1.3");
+          wp_enqueue_style( 'tibdit_plugin', $plugurl.'/tibbee.css', array(), "13");
           tiblog( "tibdit_plugin$plugurl/tibbee.css");
-          wp_enqueue_script( 'tibdit_plugin', $plugurl.'/tib-functions.js', array(), "1.3" );
+          wp_enqueue_script( 'tibdit_plugin', $plugurl.'/tib-functions.js', array(), "12" );
           // wp_enqueue_script( 'tibdit_plugin', $plugurl.'/tibdit-settings.js' );        
-          wp_enqueue_script( 'tibdit_plugin-bottom', $plugurl.'/tib-functions-bottom.js',array(),"1.3",true );
+          wp_enqueue_script( 'tibdit_plugin-bottom', $plugurl.'/tib-functions-bottom.js', array(), "10" ,true );
         }
 
       function bd_admin_enqueue()
@@ -481,7 +480,7 @@ function get_tib_token()    // On page load (wp_head) check for tib token (ie pa
           tiblog("bd_admin_enqueue() ". $plugurl); 
           wp_enqueue_style( 'wp-color-picker' );
           wp_enqueue_script( 'wp-color-picker' );
-          wp_enqueue_script( 'bd-admin-bottom', $plugurl.'/tibdit-settings-bottom.js', array( 'wp-color-picker' ), false, true );
+          wp_enqueue_script( 'bd-admin-bottom', $plugurl.'/tibdit-settings-bottom.js', array( 'wp-color-picker' ), "2", true );
         }
 
     }

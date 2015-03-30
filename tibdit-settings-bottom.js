@@ -1,3 +1,4 @@
+// version 10
 ( 
 function( $ )
   {

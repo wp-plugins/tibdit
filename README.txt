@@ -4,7 +4,7 @@ Donate link: n/a
 Tags: micropayments, microdonations, monetisation, monetization, fundraising,   button, integration, shortcode  
 Requires at least: 3.0.1  
 Tested up to: 4.1  
-Stable tag: 1.3  
+Stable tag: 1.3.1 
 License: GPL3  
 License URI: http://www.gnu.org/licenses/gpl-3.0.html  
 
@@ -23,14 +23,14 @@ tib buttons are placed on the site using either widgets or shortcodes.
 
 ## tib 
 /tɪb/  
-*pl.* tibs,  *v.tr* tibbed  
-*s.a.* tibber, tibbee
 
-**noun:**  
-A small online payment, typically around 15p (25¢), sent by a tibber to a tibbee, either as payment for access to content or a service, or as a gratuity.
+_noun (pl. tibs)_
+a small amount of money, typically around GBP 0.15 (USD 0.25), chosen by an individual tibber to ensure that they “do not need to think twice” before spending.
 
-**verb:**  
-A request to tibdit to transfer a micro-payment, with a value previously specified by the tibber, to the tibbee.
+_verb (v.tr tibbed)_ 
+to send a tib to a tibbee, either as a gratuity (a microdonation), or as payment for access to content or a service (a micropayment).
+
+_s.a. tibber, tibbee c.f. tip, tidbit_
 
 ## tibdit
 tibdit provides a simple, original approach to collecting micropayments from visitors.
@@ -117,6 +117,10 @@ Every time someone confirms a tib to some content of yours, we send back a token
 
 == Changelog ==
 
+= 1.3.1 =
+
+* changes to versioning on js / css for cachebusting
+
 = 1.3 = 
 
 * Tib post feature added
@@ -141,38 +145,34 @@ Every time someone confirms a tib to some content of yours, we send back a token
 = 1.2.34 =
 
 * fixed tooltips
-
 * CSS improvements
-
 * svn glitch
 
-= 1.2.32
+= 1.2.32 =
 
 * Hopefully removed a .js conflict when certain scripts are combined together (and minified) by an unrelated WP plugin.
 
 = 1.2.31 =
 
 * Improved this README file.
-
 * Fixed an incompatibility with earlier versions of PHP.
 
 = 1.2.30 =
 
-Fixed a bug with plugin options not saving
-Significantly increased the amount of bitcoin address validation. 
-Prevented setting save with invalid bitcoin address
-Further improved the CSS to avoid collissions with themes or other plugins.
-Added beta icon to widget and settings page
-
+* Fixed a bug with plugin options not saving
+* Significantly increased the amount of bitcoin address validation. 
+* Prevented setting save with invalid bitcoin address
+* Further improved the CSS to avoid collissions with themes or other plugins.
+* Added beta icon to widget and settings page
 
 = 1.2.22 =
 
-Added .bd CSS class to avoid style collisions with themes or other plugins
+* Added .bd CSS class to avoid style collisions with themes or other plugins
 
 = 1.2.21 = 
 
-Fixed tooltip glitch
+* Fixed tooltip glitch
 
 = 1.2.20 =
 
-First version uploaded to wordpress.org
+* First version uploaded to wordpress.org

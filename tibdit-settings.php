@@ -1,7 +1,7 @@
 <?PHP 
 
  // tibdit plugin settings
- // Version: 1.3
+ // Version: 1.3.1
  // License: GPL3
 
 
@@ -76,15 +76,16 @@ if (!class_exists("tibdit_settings"))
       add_filter( "plugin_action_links_tibdit/tibdit.php", array($this,'bd_plugins_page'));
     }
 
-    // Add settings link on plugin page
-    function bd_plugins_page($links) { 
+  // Add settings link on plugin page
+  function bd_plugins_page($links) 
+    { 
       tiblog("bd_plugins_page() " . var_dump($inks));
       $settings_link = '<a href="options-general.php?page=tibdit_options#help">Settings &amp; Help</a>'; 
       array_unshift($links, $settings_link); 
       return $links; 
     }
 
-    function init_admin_page()
+  function init_admin_page()
     {
       add_option( $this->settings_field, tibdit_settings::$default_settings );
 
@@ -110,7 +111,8 @@ if (!class_exists("tibdit_settings"))
       }
     }
 
-    function admin_help($contextual_help, $screen_id, $screen) {
+    function admin_help($contextual_help, $screen_id, $screen) 
+    {
       tiblog("admin_help() ");
       include ('tibdit-settings-help.php');
 
@@ -165,13 +167,13 @@ if (!class_exists("tibdit_settings"))
       wp_enqueue_script( 'Tom_Wu_jsbn.js', $plugurl.'jsbn.js' );
       wp_enqueue_script( 'Tom_Wu_jsbn2.js', $plugurl.'jsbn2.js' );
       wp_enqueue_script( 'sha256', $plugurl.'crypto-sha256.js');
-      wp_enqueue_script( 'tibdit_plugin_settings', $plugurl.'tibdit-settings.js' );
+      wp_enqueue_script( 'tibdit_plugin_settings', $plugurl.'tibdit-settings.js', array(), "13" );
       wp_enqueue_script( 'btc_payaddr_validator', $plugurl.'btcaddr_validator.js' );
-      wp_enqueue_style( 'tibdit_plugin', $plugurl.'tibbee.css' );
+      wp_enqueue_style( 'tibdit_plugin', $plugurl.'tibbee.css', array(), "13");
 
       wp_enqueue_style( 'wp-color-picker' );
       wp_enqueue_script( 'wp-color-picker' );
-      wp_enqueue_script( 'bd-admin-bottom', $plugurl.'tibdit-settings-bottom.js', false, false, true );
+      wp_enqueue_script( 'bd-admin-bottom', $plugurl.'tibdit-settings-bottom.js', array( 'wp-color-picker' ), "2", true );
     }
 
 
@@ -244,11 +246,13 @@ if (!class_exists("tibdit_settings"))
     //   $slug= "intro";
     //   $value= $this->options[$slug];
 
-    //   echo "<input id='$slug' name='$this->settings_field[$slug]' value='$value'";
-    //   echo "class='bd' type='text' size=100 maxlength=100 onchange='lowercase_tib(this);'
-    //      onkeypress='this.onchange();' onpaste='this.onchange();' oninput='this.onchange();'  >";
-    //   echo "<span id='intro_field_status'></span>";
+
+    // echo "<input id='$slug' name='$this->settings_field[$slug]' value='$value'";
+    // echo "class='bd' type='text' size=100 maxlength=100 onchange='bd_lowercase_tib(this);'
+    //    onkeypress='this.onchange();' onpaste='this.onchange();' oninput='this.onchange();'  >";
+    // echo "<span id='intro_field_status'></span>";
     // }
+
 
 
     function payaddr_field( $args )
@@ -259,7 +263,7 @@ if (!class_exists("tibdit_settings"))
       $plugurl= plugin_dir_url( __FILE__ );
 
       echo "<input id='$slug' name='$this->settings_field[$slug]' value='$value'
-        class='bd' type='text' size=36 maxlength=36 onchange='payaddr_change(this, \"$plugurl\");' 
+        class='bd' type='text' size=36 maxlength=36 onchange='bd_payaddr_change(this, \"$plugurl\");' 
         onkeypress='this.onchange();' onpaste='this.onchange();' oninput='this.onchange();'  >"; 
 
       echo "<span class='bd status' id='payaddr_field_status'>&emsp;?</span>";
